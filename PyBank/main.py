@@ -14,14 +14,6 @@ with open(csvpath, 'r') as csvfile:
 
     header = next(budget) #skip header row
 
-    # total_month = len(list(csvreader)) 
-    # print("Total month: " + str(total_month))
-
-    # total_ = 0
-    # for row in csvreader:
-    #     total_budget = total_budget + int(row[1])
-    # print(f'Total: $ {total_budget}')
-
 month_count = 0
 total_profit_loss = 0
 
@@ -70,6 +62,6 @@ finaltext=(f"Financial Analysis\n----------------------------\nTotal Months: {mo
 print(finaltext)    
 
 # export a text file with the results.
-# budgetanalysis_path = os.path.join("analysis","budget_output.txt")
-# with open(budgetanalysis_path,'w') as budgetout:
-#     budgetout.write(finaltext)
+budgetanalysis_path = os.path.join("analysis","budget_output.txt")
+with open(budgetanalysis_path,'w') as budgetout:
+    budgetout.write(finaltext)
