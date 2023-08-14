@@ -2,7 +2,7 @@
 import os
 import csv
 
-from numpy import average,greater
+from numpy import average
 from prometheus_client import generate_latest
 
 # Path for csv
@@ -14,6 +14,7 @@ with open(csvpath, 'r') as csvfile:
 
     header = next(budget) #skip header row
 
+#set initial variable and list to store variable 
     month_count = 0
     total_profit_loss = 0
 
@@ -38,30 +39,31 @@ with open(csvpath, 'r') as csvfile:
     totalPLchange = sum(profitloss_change_store)
     averagePLchange = totalPLchange/len(profitloss_change_store)
 
+#set the greatest increase and decrease = 0 to compare with the variable in the profitloss_change_store[]
     greatestincrease = 0
     greatestdecrease = 0
     i = 0  # index for greatest increase
     d = 0  # index for greatest decrease
 
-    rownumber=0
+    row_count=0
     for singlechange in profitloss_change_store:
-            rownumber +=1
+            row_count +=1
             if greatestincrease< singlechange:
                 greatestincrease = singlechange
-                i = rownumber -1
+                i = row_count -1
             if greatestdecrease > singlechange:
                 greatestdecrease = singlechange
-                d = rownumber -1
+                d = row_count -1
 
 
-    finaltext=(f"Financial Analysis\n----------------------------\nTotal Months: {month_count}\nTotal: ${total_profit_loss}\
+    final_print=(f"Financial Analysis\n----------------------------\nTotal Months: {month_count}\nTotal: ${total_profit_loss}\
     \nAverage Change: ${round(averagePLchange,2)}\nGreatest Increase in Profits: {profitloss_change_start[i]} (${greatestincrease})\
     \nGreatest Decrease in Profits: {profitloss_change_start[d]} (${greatestdecrease})")
 
-# print the analysis to the terminal 
-    print(finaltext)    
+# print the analysis
+    print(final_print)    
 
-# export a text file with the results.
+# export a text file to the analysis folder 
 budgetanalysis_path = os.path.join("analysis","budget_output.txt")
 with open(budgetanalysis_path,'w') as budgetout:
-    budgetout.write(finaltext)
+    budgetout.write(final_print)
